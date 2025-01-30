@@ -1,4 +1,23 @@
-function createCard(cardData, handleCardClick) {
+// Функция для обработки лайка карточки
+function likeCard(likeButton) {
+    likeButton.classList.toggle('card__like-button_is-active');
+}
+
+// Функция для удаления карточки
+function deleteCard(cardElement) {
+    cardElement.remove();
+}
+
+// Функция для обработки клика по изображению карточки
+function handleImageClick(cardData, popupImage, popupCaption, openModal) {
+    popupImage.src = cardData.link;
+    popupImage.alt = cardData.name;
+    popupCaption.textContent = cardData.name;
+    openModal();
+}
+
+// Функция создания карточки
+function createCard(cardData, { likeCard, deleteCard, handleImageClick }) {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const cardImage = cardElement.querySelector('.card__image');
@@ -13,20 +32,20 @@ function createCard(cardData, handleCardClick) {
 
     // Лайк карточки
     likeButton.addEventListener('click', () => {
-        likeButton.classList.toggle('card__like-button_is-active');
+      likeCard(likeButton); // Вызываем функцию для обработки лайка
     });
 
     // Удаление карточки
     deleteButton.addEventListener('click', () => {
-        cardElement.remove();
+      deleteCard(cardElement); // Вызываем функцию для удаления карточки
     });
 
     // Открытие попапа с картинкой
     cardImage.addEventListener('click', () => {
-        handleCardClick(cardData);
+      handleImageClick(cardData); // Вызываем функцию для обработки клика по изображению
     });
 
     return cardElement;
-};
+}
 
-export {createCard}
+export { createCard, likeCard, deleteCard, handleImageClick };
