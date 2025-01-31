@@ -1,10 +1,7 @@
 import './pages/index.css'; // Импорт главного файла стилей
-import {initialCards} from './scripts/cards.js'; // Карточки
-import {createCard, likeCard, deleteCard, handleImageClick } from './scripts/components/card.js'; // Работа с карточками
-import {openModal, closeModal, closeModalOnOverlayClick, addCloseButtonHandler} from './scripts/components/modal.js'; //функции для работы с окнами
-
-// Темплейт карточки
-const cardTemplate = document.querySelector('#card-template').content; // Шаблон карточки
+import { initialCards } from './scripts/cards.js'; // Карточки
+import { createCard, likeCard, deleteCard } from './scripts/components/card.js'; // Работа с карточками
+import { openModal, closeModal, closeModalOnOverlayClick, addCloseButtonHandler } from './scripts/components/modal.js'; // Функции для работы с окнами
 
 // DOM узлы
 const cardList = document.querySelector('.places__list'); // Контейнер для карточек
@@ -27,8 +24,11 @@ const popupImage = imagePopup.querySelector('.popup__image');
 const popupCaption = imagePopup.querySelector('.popup__caption');
 
 // Функция для обработки клика по изображению карточки
-function handleImageClickWrapper(cardData) {
-  handleImageClick(cardData, popupImage, popupCaption, () => openModal(imagePopup));
+function handleImageClick(cardData) {
+  popupImage.src = cardData.link;
+  popupImage.alt = cardData.name;
+  popupCaption.textContent = cardData.name;
+  openModal(imagePopup);
 }
 
 // Рендеринг карточек
@@ -37,7 +37,7 @@ function renderCards() {
     const cardElement = createCard(cardData, {
       likeCard,
       deleteCard,
-      handleImageClick: handleImageClickWrapper,
+      handleImageClick,
     });
     cardList.append(cardElement);
   });
@@ -84,7 +84,7 @@ addCardForm.addEventListener('submit', (evt) => {
     {
       likeCard,
       deleteCard,
-      handleImageClick: handleImageClickWrapper,
+      handleImageClick,
     }
   );
   cardList.prepend(newCard); // Добавляем карточку в начало списка
