@@ -160,8 +160,5 @@ Promise.all([getUserInfo(), getInitialCards()])
 
     renderCards(cards);
   })
-<<<<<<< HEAD
   .catch((err) => console.error(`Ошибка при загрузке данных: ${err}`));
-=======
-  .catch((err) => console.error(`Ошибка при загрузке данных: ${err}`));
->>>>>>> 54b4fcf7514e8e0383247dfb4975b3584ffe6c83
+
